@@ -1,5 +1,5 @@
 CellGrid grid;
-boolean paused = true;
+boolean paused = false;
 
 void setup()
 {

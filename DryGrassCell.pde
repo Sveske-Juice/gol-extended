@@ -2,7 +2,7 @@ public class DryGrassCell extends Cell
 {
     DryGrassCell()
     {
-        m_Color = color(170, 200, 20); // Yellowish greeen color
+        m_Color = color(160, 170, 14); // Yellowish greeen color
     }
 
     @Override CellType getCellType() { return CellType.DRYGRASS; }
@@ -20,13 +20,13 @@ public class DryGrassCell extends Cell
             }
         }
 
-        // Spread fire if theres alot of fire near
+        // Spread fire if there's fire nearby
         Integer fireQuantity = neighbours.get(CellType.FIRE);
         if (fireQuantity != null)
         {
-            if (fireQuantity > 2)
+            if (fireQuantity >= 1)
             {
-                return int(random(0, 75)) == 0 ? new FireCell() : null;
+                return int(random(0, 300)) == 0 ? new FireCell() : null;
             }
         }
         return null;
