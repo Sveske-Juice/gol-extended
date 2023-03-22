@@ -1,13 +1,15 @@
+import java.util.Map;
+
 class CellGrid {
 
   /// How many pixels each cell should fill on the screen
-  int m_CellPxSize = 8;
+  private int m_CellPxSize = 40;
 
   // Stores how many colums and rows there are in the cell grid
-  int m_Cols, m_Rows;
+  private int m_Cols, m_Rows;
 
   // Store 2D array representing the cell grid
-  Cell[][] m_Grid;
+  private Cell[][] m_Grid;
 
   CellGrid() {
     m_Cols = width / m_CellPxSize;
@@ -25,7 +27,12 @@ class CellGrid {
     {
       for (int j = 0;j < m_Cols; j++)
       {
-        m_Grid[i][j] = new DirtCell(true);
+        // 1 out of 50 chance of grass cell at start
+        int grassCell = int(random(0, 50));
+        if (grassCell == 0)
+          m_Grid[i][j] = new GrassCell();
+        else
+          m_Grid[i][j] = new DirtCell();
       }
     }
   }
@@ -39,21 +46,31 @@ class CellGrid {
     {
       for (int col = 0; col < m_Cols; col++)
       {
-        int neighbors = 0;
+        HashMap<CellType, Integer> neighbours = new HashMap<CellType, Integer>();
+
+        // Generate hashmap that maps cell types to the amount of those spotted as neighbours
         for (int i = -1; i <= 1; i++)
         {
           for (int j = -1; j <= 1; j++)
           {
-            if (m_Grid[(row + i + m_Rows) % m_Rows][(col + j + m_Cols) % m_Cols].isAlive())
-              neighbors++;
+            Cell cell = m_Grid[(row + i + m_Rows) % m_Rows][(col + j + m_Cols) % m_Cols];
+            Integer qauntity = neighbours.get(cell.getCellType());
+
+            if (qauntity != null)
+              neighbours.put(cell.getCellType(), ++qauntity);
+            else
+              neighbours.put(cell.getCellType(), 1);
           }
         }
 
-        // Subtract cell's own value from neigbours
-        if (m_Grid[row][col].isAlive()) neighbors--;
+        // Subtract cell's own value from neighbours
+        int quantity = neighbours.get(m_Grid[row][col].getCellType());
+        neighbours.put(m_Grid[row][col].getCellType(), --quantity);
+
+        m_Grid[row][col].increaseLifeTime();
 
         // Rules of Life
-        Cell newCell = m_Grid[row][col].updateState(neighbors);
+        Cell newCell = m_Grid[row][col].updateState(neighbours);
         if (newCell == null) // Same cell survived: Stasis
           nextGrid[row][col] = m_Grid[row][col];
         else
@@ -75,5 +92,10 @@ class CellGrid {
         m_Grid[i][j].display(j, i, m_CellPxSize);
       }
     }
+  }
+
+  void singleStep()
+  {
+    generate();
   }
 }

@@ -1,18 +1,32 @@
 CellGrid grid;
+boolean paused = true;
 
-void setup() {
-  size(1000, 500);
+void setup()
+{
+  size(1000, 1000);
+  frameRate(10);
   grid = new CellGrid();
 }
 
-void draw() {
+void draw()
+{
   background(255);
 
-  grid.generate();
+  if (!paused)
+    grid.generate();
   grid.display();
 }
 
-// reset m_Grid when mouse is pressed
-void mousePressed() {
-  grid.init();
+void mouseReleased()
+{
+  paused = !paused; 
+}
+
+void keyPressed()
+{
+  // Single step on space down and while its paused
+  if (key == 32 && paused)
+  {
+    grid.singleStep();
+  }
 }
