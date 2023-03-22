@@ -4,7 +4,7 @@ boolean paused = true;
 void setup()
 {
   size(1000, 1000);
-  frameRate(10);
+  // frameRate(10);
   grid = new CellGrid();
 }
 
@@ -14,6 +14,7 @@ void draw()
 
   if (!paused)
     grid.generate();
+
   grid.display();
 }
 

@@ -10,6 +10,8 @@ public class GrassCell extends Cell
     @Override
     public Cell updateState(HashMap<CellType, Integer> neighbours)
     {
+        if (m_LifeTime > 100)
+            return new DryGrassCell();
         return null;
     }
 }
