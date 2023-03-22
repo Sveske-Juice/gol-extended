@@ -13,7 +13,7 @@ class CellGrid {
     m_Cols = width / m_CellPxSize;
     m_Rows = height / m_CellPxSize;
 
-    m_Grid = new int[m_Cols][m_Rows];
+    m_Grid = new int[m_Rows][m_Cols];
 
     // Initialize cell grid
     init();
@@ -21,9 +21,9 @@ class CellGrid {
 
   void init()
   {
-    for (int i = 0;i < m_Cols;i++)
+    for (int i = 0;i < m_Rows; i++)
     {
-      for (int j = 0;j < m_Rows;j++)
+      for (int j = 0;j < m_Cols; j++)
       {
         m_Grid[i][j] = int(random(2));
       }
@@ -33,49 +33,49 @@ class CellGrid {
   /// Generates a new generation of cells based on the current
   void generate()
   {
-    int[][] nextGrid = new int[m_Cols][m_Rows];
+    int[][] nextGrid = new int[m_Rows][m_Cols];
 
-    for (int x = 0; x < m_Cols; x++)
+    for (int row = 0; row < m_Rows; row++)
     {
-      for (int y = 0; y < m_Rows; y++)
+      for (int col = 0; col < m_Cols; col++)
       {
         int neighbors = 0;
         for (int i = -1; i <= 1; i++)
         {
           for (int j = -1; j <= 1; j++)
           {
-            neighbors += m_Grid[(x+i+m_Cols)%m_Cols][(y+j+m_Rows)%m_Rows];
+            neighbors += m_Grid[(row + i + m_Rows) % m_Rows][(col + j + m_Cols) % m_Cols];
           }
         }
 
         // A little trick to subtract the current cell's state since
         // we added it in the above loop
-        neighbors -= m_Grid[x][y];
+        neighbors -= m_Grid[row][col];
 
         // Rules of Life
-        if (m_Grid[x][y] == 1)
+        if (m_Grid[row][col] == 1)
         {
           // Overpopulation
           if (neighbors > 3)
-            nextGrid[x][y] = 0;
+            nextGrid[row][col] = 0;
           
           // Loneliness
           else if (neighbors < 2)
-            nextGrid[x][y] = 0;
+            nextGrid[row][col] = 0;
           
           // Stasis
           else
-            nextGrid[x][y] = m_Grid[x][y];
+            nextGrid[row][col] = m_Grid[row][col];
         }
         else
         {
           // Birth
           if (neighbors == 3)
-            nextGrid[x][y] = 1;
+            nextGrid[row][col] = 1;
           
           // Stasis
           else
-            nextGrid[x][y] = m_Grid[x][y];
+            nextGrid[row][col] = m_Grid[row][col];
         }
       }
     }
@@ -86,14 +86,14 @@ class CellGrid {
   /// Display the cell grid
   void display()
   {
-    for ( int i = 0; i < m_Cols;i++)
+    for (int i = 0; i < m_Rows; i++)
     {
-      for ( int j = 0; j < m_Rows;j++)
+      for (int j = 0; j < m_Cols; j++)
       {
-        if ((m_Grid[i][j] == 1)) fill(0);
+        if (m_Grid[i][j] == 1) fill(0);
         else fill(255); 
         stroke(0);
-        rect(i * m_CellPxSize, j * m_CellPxSize, m_CellPxSize, m_CellPxSize);
+        rect(j * m_CellPxSize, i * m_CellPxSize, m_CellPxSize, m_CellPxSize);
       }
     }
   }
