@@ -11,6 +11,12 @@ class CellGrid {
   // Store 2D array representing the cell grid
   private Cell[][] m_Grid;
 
+  // Millis it takes for a generation to be generated
+  private float m_GenerationTime = 0f;
+
+  // Millis it takes for a generation to be generated
+  private float m_DrawTime = 0f;
+
   CellGrid() {
     m_Cols = width / m_CellPxSize;
     m_Rows = height / m_CellPxSize;
@@ -34,6 +40,9 @@ class CellGrid {
     return m_Grid[row][col];
   }
 
+  float getGenTime() { return m_GenerationTime; }
+  float getDrawTime() { return m_DrawTime; }
+
   void init()
   {
     for (int i = 0; i < m_Rows; i++)
@@ -55,6 +64,7 @@ class CellGrid {
   /// Generates a new generation of cells based on the current
   void generate()
   {
+    float startTime = millis();
     Cell[][] nextGrid = new Cell[m_Rows][m_Cols];
 
     for (int row = 0; row < m_Rows; row++)
@@ -96,11 +106,13 @@ class CellGrid {
     }
 
     m_Grid = nextGrid;
+    m_GenerationTime = millis() - startTime;
   }
 
   /// Display the cell grid
   void display()
   {
+    float startTime = millis();
     for (int i = 0; i < m_Rows; i++)
     {
       for (int j = 0; j < m_Cols; j++)
@@ -109,6 +121,7 @@ class CellGrid {
         m_Grid[i][j].display(j, i, m_CellPxSize);
       }
     }
+    m_DrawTime = millis() - startTime;
   }
 
   void singleStep()

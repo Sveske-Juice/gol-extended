@@ -1,7 +1,9 @@
 CellGrid grid;
 boolean paused = false;
 boolean mouseInWin = true;
+boolean showDebugWin = true;
 int simSpeed = 1;
+float generationTime = 0f; // Time it takes for generation in this frame
 
 void setup()
 {
@@ -12,17 +14,24 @@ void setup()
 
 void draw()
 {
+  Time.Tick(millis());
   background(255);
 
   if (!paused)
   {
     int currentSimGen = 0;
+    generationTime = 0f;
     do {
       grid.generate();
+      generationTime += grid.getGenTime();
     } while (++currentSimGen < simSpeed);
   }
 
   grid.display();
+
+  // Show debug window
+  if (showDebugWin)
+    showDebugWindow();
 
   // Show information about hovering cell
   showCellInfo();
@@ -46,7 +55,6 @@ void showCellInfo()
   int windowXPos = mouseX + 25; // move so cursor is not blocking view
   int windowYPos = mouseY;
 
-  // background
   int winWidth = width / 5;
   int winHeight = height / 7;
 
@@ -59,6 +67,7 @@ void showCellInfo()
 
   int currentElem = windowYPos + 5; // start pos
 
+  // background
   fill(25, 25, 25);
   rect(windowXPos, windowYPos, winWidth, winHeight);
 
@@ -73,7 +82,46 @@ void showCellInfo()
   // depth 
   textSize(14);
   text("Neighbour search depth: " + cellDepth, windowXPos, currentElem);
-  currentElem += elemStep;  
+  currentElem += elemStep;
+}
+
+void showDebugWindow()
+{
+  int winWidth = 300;
+  int windowXPos = width - winWidth;
+  int winHeight = 200;
+  int windowYPos = 0;
+  
+  int elemStep = 25; // padding
+  int currentElem = windowYPos + 5; // start pos
+
+  fill(25, 25, 25, 225);
+  rect(windowXPos, windowYPos, winWidth, winHeight);
+
+  // data
+  float frameTime = Time.dt();
+  float drawTime = grid.getDrawTime();
+
+  // settings
+  fill(255);
+  textAlign(LEFT, TOP);
+  textSize(14);
+
+  // frame time
+  text("frametime, dt: " + frameTime + "ms" + " ---  FPS: " + frameRate, windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // gen time
+  text("Generation time: " + generationTime / 1000 + "ms", windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // draw time
+  text("Draw time: " + drawTime / 1000 + "ms", windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // toggle txt
+  textAlign(LEFT, BOTTOM);
+  text("Toggle this debug window with 'i' key", windowXPos, windowYPos + winHeight);
 }
 
 void mouseReleased()
@@ -88,6 +136,8 @@ void keyPressed()
   {
     grid.singleStep();
   }
+  else if (key == 'i')
+    showDebugWin = !showDebugWin;
 }
 
 void mouseEntered()
