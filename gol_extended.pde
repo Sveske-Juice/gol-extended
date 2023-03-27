@@ -3,7 +3,7 @@ boolean paused = false;
 
 void setup()
 {
-  size(1000, 1000);
+  size(990, 1000);
   // frameRate(10);
   grid = new CellGrid();
 }

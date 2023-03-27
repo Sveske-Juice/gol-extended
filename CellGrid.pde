@@ -3,7 +3,7 @@ import java.util.Map;
 class CellGrid {
 
   /// How many pixels each cell should fill on the screen
-  private int m_CellPxSize = 50;
+  private int m_CellPxSize = 11;
 
   // Stores how many colums and rows there are in the cell grid
   private int m_Cols, m_Rows;
