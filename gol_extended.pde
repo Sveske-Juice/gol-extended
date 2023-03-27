@@ -37,14 +37,24 @@ void showCellInfo()
 
   // Create info window
   int elemStep = 25; // padding
-  int currentElem = mouseY + 5; // start pos
   int windowXPos = mouseX + 25; // move so cursor is not blocking view
+  int windowYPos = mouseY;
 
   // background
   int winWidth = width / 5;
   int winHeight = height / 7;
+
+  // If window will be out of window border, reposition the window pos
+  if (windowXPos + winWidth > width)
+    windowXPos = mouseX - winWidth;
+  
+  if (windowYPos + winHeight > height)
+    windowYPos = mouseY - winHeight;
+
+  int currentElem = windowYPos + 5; // start pos
+
   fill(25, 25, 25);
-  rect(windowXPos, mouseY, winWidth, winHeight);
+  rect(windowXPos, windowYPos, winWidth, winHeight);
 
   fill(255);
   textAlign(LEFT, TOP);
