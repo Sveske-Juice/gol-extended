@@ -3,6 +3,7 @@ public class DryGrassCell extends Cell
     DryGrassCell()
     {
         m_Color = color(160, 170, 14); // Yellowish greeen color
+        m_NeighbourDepth = 3;
     }
 
     @Override CellType getCellType() { return CellType.DRYGRASS; }
@@ -14,7 +15,7 @@ public class DryGrassCell extends Cell
         Integer dryGrassQuantity = neighbours.get(CellType.DRYGRASS);
         if (dryGrassQuantity != null)
         {
-            if (dryGrassQuantity > 7)
+            if (dryGrassQuantity >= getNeighbourByPercent(0.8f))
             {
                 return int(random(0, 500)) == 0 ? new FireCell() : null;
             }
@@ -24,9 +25,9 @@ public class DryGrassCell extends Cell
         Integer fireQuantity = neighbours.get(CellType.FIRE);
         if (fireQuantity != null)
         {
-            if (fireQuantity >= 1)
+            if (fireQuantity > 0)
             {
-                return int(random(0, 300)) == 0 ? new FireCell() : null;
+                return int(random(0, 600)) == 0 ? new FireCell() : null;
             }
         }
         return null;

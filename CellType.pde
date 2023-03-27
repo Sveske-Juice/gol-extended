@@ -4,5 +4,7 @@ public enum CellType
     GRASS,
     DRYGRASS,
     FIRE,
-    ASH
+    ASH,
+    WATER,
+    OBSIDIAN
 }

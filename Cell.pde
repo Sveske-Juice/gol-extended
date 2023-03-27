@@ -21,4 +21,13 @@ public abstract class Cell
 
         rect(x * cellPxSize, y * cellPxSize, cellPxSize, cellPxSize);
     }
+
+    /// Calculates and returns the amount of neighbours around this cell based on what it's search depth is.
+    /// If for example percent is 0.5, then half of the count of neighbours are returned etc. percent is normalized.
+    /// Result is floored (rounded down to nearest integer)
+    /// Uses formula: neighbours = (2n+1)^2 - 1
+    protected int getNeighbourByPercent(float percent)
+    {
+        return (int) (((2*m_NeighbourDepth+1)*(2*m_NeighbourDepth+1) - 1) * percent);
+    }
 }

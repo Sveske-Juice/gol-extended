@@ -10,9 +10,15 @@ public class DirtCell extends Cell
     @Override
     public Cell updateState(HashMap<CellType, Integer> neighbours)
     {
-        // If at leas one grass block close then become grass
+        // If at least one grass block is close then have chance of becoming grass
         Integer grassQuantity = neighbours.get(CellType.GRASS);
         if (grassQuantity != null)
+        {
+            return int(random(0, 250)) == 0 ? new GrassCell() : null;
+        }
+
+        Integer waterQuantity = neighbours.get(CellType.WATER);
+        if (waterQuantity != null) // Water source nearby
         {
             return int(random(0, 50)) == 0 ? new GrassCell() : null;
         }

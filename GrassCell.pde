@@ -10,17 +10,21 @@ public class GrassCell extends Cell
     @Override
     public Cell updateState(HashMap<CellType, Integer> neighbours)
     {
-        if (m_LifeTime > 100)
-            return int(random(0, 100)) == 0 ? new DryGrassCell() : null;
-
-        // Spread fire if there's fire nearby
+        // Spread fire if there's enough fire nearby
         Integer fireQuantity = neighbours.get(CellType.FIRE);
         if (fireQuantity != null)
         {
-            if (fireQuantity > 3)
+            if (fireQuantity > 1)
             {
-                return int(random(0, 300)) == 0 ? new FireCell() : null;
+                return int(random(0, 100)) == 0 ? new FireCell() : null;
             }
+        }
+
+        if (m_LifeTime > 500)
+        {
+            Integer waterQuantity = neighbours.get(CellType.WATER);
+            if (waterQuantity == null) // Slowly turn to dry grass if no water source nearby
+                return int(random(0, 100)) == 0 ? new DryGrassCell() : null;
         }
 
         return null;

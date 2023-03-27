@@ -3,7 +3,7 @@ import java.util.Map;
 class CellGrid {
 
   /// How many pixels each cell should fill on the screen
-  private int m_CellPxSize = 10;
+  private int m_CellPxSize = 50;
 
   // Stores how many colums and rows there are in the cell grid
   private int m_Cols, m_Rows;
@@ -23,14 +23,16 @@ class CellGrid {
 
   void init()
   {
-    for (int i = 0;i < m_Rows; i++)
+    for (int i = 0; i < m_Rows; i++)
     {
-      for (int j = 0;j < m_Cols; j++)
+      for (int j = 0; j < m_Cols; j++)
       {
         // 1 out of 50 chance of grass cell at start
-        int grassCell = int(random(0, 50));
-        if (grassCell == 0)
+        int rand = int(random(0, 50));
+        if (rand == 0)
           m_Grid[i][j] = new GrassCell();
+        else if (rand == 1)
+          m_Grid[i][j] = new WaterCell();
         else
           m_Grid[i][j] = new DirtCell();
       }
@@ -46,12 +48,14 @@ class CellGrid {
     {
       for (int col = 0; col < m_Cols; col++)
       {
+        Cell currentCell = m_Grid[row][col];
+        int depth = currentCell.getNeightbourDepth();
         HashMap<CellType, Integer> neighbours = new HashMap<CellType, Integer>();
 
         // Generate hashmap that maps cell types to the amount of those spotted as neighbours
-        for (int i = -1; i <= 1; i++)
+        for (int i = -depth; i <= depth; i++)
         {
-          for (int j = -1; j <= 1; j++)
+          for (int j = -depth; j <= depth; j++)
           {
             Cell cell = m_Grid[(row + i + m_Rows) % m_Rows][(col + j + m_Cols) % m_Cols];
             Integer qauntity = neighbours.get(cell.getCellType());
