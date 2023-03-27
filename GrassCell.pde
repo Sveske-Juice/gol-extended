@@ -3,6 +3,7 @@ public class GrassCell extends Cell
     GrassCell()
     {
         m_Color = color(15, 175, 15); // Green color
+        m_Name = "Grass Cell";
     }
 
     @Override CellType getCellType() { return CellType.GRASS; }

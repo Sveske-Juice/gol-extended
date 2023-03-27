@@ -3,6 +3,7 @@ public class DirtCell extends Cell
     DirtCell()
     {
         m_Color = color(90, 70, 25); // brown color
+        m_Name = "Dirt Cell";
     }
 
     @Override CellType getCellType() { return CellType.DIRT; }

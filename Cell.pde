@@ -1,6 +1,7 @@
 public abstract class Cell
 {
     protected color m_Color = color(255, 0, 200); // Default to pink
+    protected String m_Name = "Default Cell";
 
     /// Stores the lifetime of the cell. Specifically how many generations the cell have survived.
     protected int m_LifeTime = 0;
@@ -10,6 +11,8 @@ public abstract class Cell
 
     public int getNeightbourDepth() { return m_NeighbourDepth; }
     public void increaseLifeTime() { m_LifeTime++; }
+    public String getCellName() { return m_Name; }
+    public color getColor() { return m_Color; }
 
     public abstract CellType getCellType();
     public abstract Cell updateState(HashMap<CellType, Integer> neighbours);

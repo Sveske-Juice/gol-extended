@@ -8,6 +8,7 @@ public class FireCell extends Cell
     FireCell()
     {
         m_Color = m_Orange; // Orange
+        m_Name = "Fire Cell";
     }
 
     @Override CellType getCellType() { return CellType.FIRE; }

@@ -4,6 +4,7 @@ public class AshCell extends Cell
     {
         m_Color = color(100, 100, 100); // Grey
         m_NeighbourDepth = 2;
+        m_Name = "Ash Cell";
     }
 
     @Override CellType getCellType() { return CellType.ASH; }

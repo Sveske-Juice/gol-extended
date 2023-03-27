@@ -21,6 +21,19 @@ class CellGrid {
     init();
   }
 
+  /// Translates the pixel coordinates to array indices and return the cell. If its out of bounds return null
+  Cell getCellAt(int xPos, int yPos)
+  {
+    // colums is y cords and rows is x cords
+    int row = yPos / m_CellPxSize;
+    int col = xPos / m_CellPxSize;
+
+    if (row >= m_Rows || col >= m_Cols)
+      return null;
+
+    return m_Grid[row][col];
+  }
+
   void init()
   {
     for (int i = 0; i < m_Rows; i++)

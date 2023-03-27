@@ -4,6 +4,7 @@ public class DryGrassCell extends Cell
     {
         m_Color = color(160, 170, 14); // Yellowish greeen color
         m_NeighbourDepth = 3;
+        m_Name = "Dry Grass Cell";
     }
 
     @Override CellType getCellType() { return CellType.DRYGRASS; }
