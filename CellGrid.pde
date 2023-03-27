@@ -14,6 +14,8 @@ class CellGrid {
   // Millis it takes for a generation to be generated
   private float m_GenerationTime = 0f;
 
+  private int m_GenerationCount = 0;
+
   // Millis it takes for a generation to be generated
   private float m_DrawTime = 0f;
 
@@ -42,6 +44,7 @@ class CellGrid {
 
   float getGenTime() { return m_GenerationTime; }
   float getDrawTime() { return m_DrawTime; }
+  int getGenCount() { return m_GenerationCount; }
 
   void init()
   {
@@ -107,6 +110,7 @@ class CellGrid {
 
     m_Grid = nextGrid;
     m_GenerationTime = millis() - startTime;
+    m_GenerationCount++;
   }
 
   /// Display the cell grid

@@ -17,6 +17,9 @@ void draw()
   Time.Tick(millis());
   background(255);
 
+  // Validate sim speed
+  if (simSpeed < 1) simSpeed = 1;
+
   if (!paused)
   {
     int currentSimGen = 0;
@@ -89,7 +92,7 @@ void showDebugWindow()
 {
   int winWidth = 300;
   int windowXPos = width - winWidth;
-  int winHeight = 200;
+  int winHeight = 275;
   int windowYPos = 0;
   
   int elemStep = 25; // padding
@@ -101,6 +104,7 @@ void showDebugWindow()
   // data
   float frameTime = Time.dt();
   float drawTime = grid.getDrawTime();
+  int genCnt = grid.getGenCount();
 
   // settings
   fill(255);
@@ -119,9 +123,27 @@ void showDebugWindow()
   text("Draw time: " + drawTime / 1000 + "ms", windowXPos, currentElem);
   currentElem += elemStep;
 
+  // simulation speed
+  text("Simulation speed: " + simSpeed + " (use up and down arrow)", windowXPos, currentElem);
+  currentElem += elemStep;
+
+  // generation
+  text("Generation: " + genCnt, windowXPos, currentElem);
+  currentElem += elemStep;
+
+  fill(220, 140, 25);
+  // pause txt
+  textAlign(LEFT, BOTTOM);
+  text("Pause simulation with 'mouse'", windowXPos, windowYPos + winHeight - elemStep*2);
+
+  // single step txt
+  textAlign(LEFT, BOTTOM);
+  text("Single step with 'space' in pause", windowXPos, windowYPos + winHeight - elemStep);
+
   // toggle txt
   textAlign(LEFT, BOTTOM);
   text("Toggle this debug window with 'i' key", windowXPos, windowYPos + winHeight);
+
 }
 
 void mouseReleased()
@@ -138,6 +160,10 @@ void keyPressed()
   }
   else if (key == 'i')
     showDebugWin = !showDebugWin;
+  else if (keyCode == UP)
+    simSpeed++;
+  else if (keyCode == DOWN)
+    simSpeed--;
 }
 
 void mouseEntered()
