@@ -1,11 +1,12 @@
 CellGrid grid;
 boolean paused = false;
 boolean mouseInWin = true;
+int simSpeed = 1;
 
 void setup()
 {
   size(990, 1000);
-  // frameRate(10);
+  // frameRate(500);
   grid = new CellGrid();
 }
 
@@ -14,7 +15,12 @@ void draw()
   background(255);
 
   if (!paused)
-    grid.generate();
+  {
+    int currentSimGen = 0;
+    do {
+      grid.generate();
+    } while (++currentSimGen < simSpeed);
+  }
 
   grid.display();
 
