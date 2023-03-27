@@ -4,12 +4,18 @@ boolean mouseInWin = true;
 boolean showDebugWin = true;
 int simSpeed = 1;
 float generationTime = 0f; // Time it takes for generation in this frame
+int seed = -1; // seed < 0: disable seed, otherwise use random seed
 
 void setup()
 {
   size(990, 1000);
   // frameRate(500);
   grid = new CellGrid();
+
+  if (seed < 0)
+    seed = int(random(0, Integer.MAX_VALUE));
+
+  randomSeed(seed);
 }
 
 void draw()
@@ -116,7 +122,7 @@ void showDebugWindow()
   currentElem += elemStep;
 
   // gen time
-  text("Generation time: " + generationTime / 1000 + "ms", windowXPos, currentElem);
+  text("Generate time: " + generationTime / 1000 + "ms", windowXPos, currentElem);
   currentElem += elemStep;
 
   // draw time
@@ -130,6 +136,12 @@ void showDebugWindow()
   // generation
   text("Generation: " + genCnt, windowXPos, currentElem);
   currentElem += elemStep;
+
+  // seed
+  text("Seed: " + seed, windowXPos, currentElem);
+  currentElem += elemStep;
+
+  
 
   fill(220, 140, 25);
   // pause txt
