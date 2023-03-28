@@ -118,15 +118,15 @@ void showDebugWindow()
   textSize(14);
 
   // frame time
-  text("frametime, dt: " + frameTime + "ms" + " ---  FPS: " + frameRate, windowXPos, currentElem);
+  text("frametime, dt: " + frameTime + "s" + " ---  FPS: " + frameRate, windowXPos, currentElem);
   currentElem += elemStep;
 
   // gen time
-  text("Generate time: " + generationTime / 1000 + "ms", windowXPos, currentElem);
+  text("Generate time: " + generationTime / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
   // draw time
-  text("Draw time: " + drawTime / 1000 + "ms", windowXPos, currentElem);
+  text("Draw time: " + drawTime / 1000 + "s", windowXPos, currentElem);
   currentElem += elemStep;
 
   // simulation speed
