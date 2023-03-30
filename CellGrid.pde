@@ -83,7 +83,17 @@ class CellGrid {
         {
           for (int j = -depth; j <= depth; j++)
           {
-            Cell cell = m_Grid[(row + i + m_Rows) % m_Rows][(col + j + m_Cols) % m_Cols];
+            int neighbourRow = i + row;
+            int neighbourCol = j + col;
+
+            if (neighbourRow < 0 || neighbourRow >= m_Rows)
+              continue;
+
+            if (neighbourCol < 0 || neighbourCol >= m_Cols)
+              continue;
+
+            
+            Cell cell = m_Grid[neighbourRow][neighbourCol];
             Integer qauntity = neighbours.get(cell.getCellType());
 
             if (qauntity != null)
